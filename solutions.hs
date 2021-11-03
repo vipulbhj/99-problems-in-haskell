@@ -2,6 +2,8 @@ import Data.List
 
 data NestedList a = Elem a | List [NestedList a]
 
+data Quantify size char = Single char | Multiple size char
+                            deriving Show
 
 -- Problem 01
 myLast []   = error "Are you dumb ..??"
@@ -52,3 +54,14 @@ pack = Data.List.group
 -- Problem 10
 encode :: Eq a => [a] -> [(Int, a)]
 encode = map (\x -> (length x, head x)) . Data.List.group
+
+-- Problem 11
+encodeModified :: Eq a => [a] -> [Quantify Int a]
+encodeModified = map (\x -> if (length x) > 1 then Multiple (length x) (head x) else Single (head x)) . Data.List.group
+
+-- Problem 12
+decodeModified :: [Quantify Int a] -> [a]
+decodeModified = concatMap decodeModified'
+                  where decodeModified' (Single a) = [a]
+                        decodeModified' (Multiple times a) = replicate times a
+
