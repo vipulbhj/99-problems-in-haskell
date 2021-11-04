@@ -105,6 +105,8 @@ rotate xs pos
         rotateHelper xs pos = drop pos xs ++ take pos xs
 
 -- Problem 20
-removeAt :: Int -> [a] -> [a]
+removeAt :: Int -> [a] -> ([a], [a])
+removeAt pos xs = (take 1 $ drop (pos - 1) xs, take (pos - 1) xs ++ drop pos xs)
+
 
 
